@@ -1,0 +1,17 @@
+{
+  "name": "node_express_sequelize_mysql_api",
+  "version": "1.0.0",
+  "description": "a simple crud API with squelize",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "masoud",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "mysql2": "^3.11.0",
+    "sequelize": "^6.37.3"
+  }
+}
