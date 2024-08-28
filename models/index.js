@@ -17,11 +17,19 @@ const sequelize = new Sequelize(
       }
    }
 )
+// const sequelize = new Sequelize({
+// 	dialect: dbConfig.dialect,
+// 	database: dbConfig.DB,
+// 	user: "root",
+// 	password: dbConfig.PASSWORD,
+// 	host: dbConfig.HOST,
+// 	port: dbConfig.PORT,
+// });
 
 sequelize.authenticate().then(()=>{
    console.log('connected... ');
 }).catch(err =>{
-   console.log("Error: " + err);
+   console.log("Error:💥 " + err);
 })
 
 const db = {}
@@ -30,7 +38,7 @@ db.sequelize = sequelize
 
 
 // This part initializes and attaches database models to the db object. Models in Sequelize are JavaScript classes that map to database tables, with attributes (columns) and methods that represent data and operations on the data.
-db.education = require("./educationModel.js")(sequelize , DataTypes)
+// db.education = require("./educationModel.js")(sequelize , DataTypes)
 db.comments = require("./commentsModel.js")(sequelize , DataTypes)
 
 

@@ -4,12 +4,13 @@
   "description": "a simple crud API with squelize",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node --env-file=.env server"
   },
   "author": "masoud",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "mysql2": "^3.11.0",
     "sequelize": "^6.37.3"
