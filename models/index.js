@@ -34,7 +34,12 @@ db.sequelize = sequelize
 db.education = require("./educationModel.js")(sequelize , DataTypes)
 db.comments = require("./commentsModel.js")(sequelize , DataTypes)
 db.author = require("./authorModel.js")(sequelize , DataTypes)
+db.socialMedia = require("./socialMediaModel.js")(sequelize , DataTypes)
 
+
+//add Associated 
+db.author.associate(db.socialMedia)
+db.socialMedia.associate(db.author)
 
 // The sync() method ensures that the defined models in Sequelize match the structure of the actual database tables. In other words, it synchronizes the model definitions with the schema of the database.
 db.sequelize.sync({force:false}).then(()=>{
