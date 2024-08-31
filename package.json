@@ -4,7 +4,7 @@
   "description": "a simple crud API with squelize",
   "main": "server.js",
   "scripts": {
-    "dev": "node --env-file=.env server"
+    "dev": "node --watch --env-file=.env server"
   },
   "author": "masoud",
   "license": "ISC",
