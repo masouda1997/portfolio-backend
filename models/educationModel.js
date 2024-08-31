@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
 		},
 
 		{
-			// timestamps: false,
+			timestamps: false,
          //If you remove timestamps: false Automatic timestamps: Sequelize will automatically add and manage createdAt and updatedAt fields.
          // Potential issue: If your existing table does not have createdAt and updatedAt columns, you may face issues with record creation and updates because Sequelize expects these columns to exist.
 			tableName: "education",//Default behavior: If you don't specify a table name with the tableName option, Sequelize will infer the table name from the model name. By default, it pluralizes the model name to determine the table name.

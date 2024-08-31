@@ -1,6 +1,7 @@
 const express = require("express")
 const cors = require("cors")
-const router = require("./routes/commentsRouter.js")
+const commentRoute = require("./routes/commentsRouter.js")
+const educationRoute = require("./routes/educationsRouter.js")
 require('dotenv').config()
 
 const app = express()
@@ -16,7 +17,8 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 //routes
-app.use('/api/comments' , router )
+app.use('/api/comments' , commentRoute )
+app.use('/api/education' , educationRoute)
 
 
 

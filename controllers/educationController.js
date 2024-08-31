@@ -12,7 +12,7 @@ const getEducations = async (req,res)=>{
 const getSpecificEducation = async (req,res)=>{
    let id = req.params.id
    let edu = await Education.findOne({where:{id:id}})
-   res.status(200).send(product)
+   res.status(200).send(edu)
 }
 
 module.exports = {
