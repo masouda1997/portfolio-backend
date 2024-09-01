@@ -24,12 +24,87 @@ app.use('/api/comments' , commentRoute )
 app.use('/api/education' , educationRoute)
 app.use('/api/author' , authorRouter)
 
+function getRoutes(app) {
+   const routes = [];
 
+   // Iterate through the app's stack to find routers
+   app._router.stack.forEach((middleware) => {
+       if (middleware.route) {
+           // Directly registered routes
+           const path = middleware.route.path;
+           const methods = Object.keys(middleware.route.methods).map(method => method.toUpperCase());
+           routes.push({ path, methods });
+       } else if (middleware.name === 'router' && middleware.handle.stack) {
+           // Handle routes registered through routers
+           const routerPath = middleware.regexp.source
+               .replace('^\\', '')  // Remove leading ^\
+               .replace('\\/?(?=\\/|$)', '') // Remove trailing routing-specific regex
+               .replace(/\\\//g, '/'); // Replace escaped slashes
 
-// testing api
-app.get('/',(req,res)=>{
-   res.json({message:"hello"})
-})
+           middleware.handle.stack.forEach((handler) => {
+               if (handler.route) {
+                   const path = handler.route.path;
+                   const methods = Object.keys(handler.route.methods).map(method => method.toUpperCase());
+                   routes.push({ path: routerPath + path, methods });
+               }
+           });
+       }
+   });
+   return routes;
+}
+
+// Helper function to print routes in a tree format
+function printTree(routes) {
+   // Root node
+   const root = { name: '/api', children: [] };
+
+   // Build the tree structure
+   routes.forEach(route => {
+       const segments = route.path.split('/').filter(Boolean);
+       let currentLevel = root;
+
+       segments.forEach((segment, index) => {
+           let node = currentLevel.children.find(node => node.name === segment);
+           if (!node) {
+               node = { name: segment, children: [] };
+               currentLevel.children.push(node);
+           }
+           if (index === segments.length - 1) {
+               node.methods = route.methods;
+           }
+           currentLevel = node;
+       });
+   });
+
+   // Function to generate a string representation of the tree
+   function generateTreeString(node, depth = 0) {
+       const indentation = '  '.repeat(depth);
+       let result = `${indentation}- ${node.name}`;
+       if (node.methods) {
+           result += ` (${node.methods.join(', ')})`;
+       }
+       result += '\n';
+       for (const child of node.children) {
+           result += generateTreeString(child, depth + 1);
+       }
+       return result;
+   }
+
+   return generateTreeString(root);
+}
+
+// Route to display all routes in a tree format
+app.get('/', (req, res) => {
+   // Get all routes including those under /api prefixes
+   const routes = getRoutes(app);
+
+   // Generate the tree string
+   const treeString = printTree(routes);
+
+   // Send as preformatted text
+   res.send(`<pre>${treeString}</pre>`);
+});
+
 
 // port
 const PORT = process.env.PORT || 8080
@@ -37,5 +112,4 @@ const PORT = process.env.PORT || 8080
 //server
 app.listen(PORT , ()=>{
    console.log("server is running on port " + PORT);
-   
 })
