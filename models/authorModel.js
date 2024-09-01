@@ -1,5 +1,5 @@
-module.exports = (sequelize , DataTypes) => {
-   const Author = sequelize.define(
+module.exports = (sequelize, DataTypes) => {
+	const Author = sequelize.define(
 		"Author",
 		{
 			id: {
@@ -8,30 +8,14 @@ module.exports = (sequelize , DataTypes) => {
 				primaryKey: true,
 				autoIncrement: true,
 			},
-			firstName: {
-				type: DataTypes.STRING,
-			},
-			lastName: {
-				type: DataTypes.STRING,
-			},
-			age: {
-				type: DataTypes.INTEGER,
-			},
-			nationality: {
-				type: DataTypes.STRING,
-			},
-			address: {
-				type: DataTypes.STRING,
-			},
-			phone: {
-				type: DataTypes.STRING(20),
-			},
-			email: {
-				type: DataTypes.STRING,
-			},
-			birth:{
-				type: DataTypes.DATEONLY,
-			}
+			firstName: { type: DataTypes.STRING },
+			lastName: { type: DataTypes.STRING },
+			age: { type: DataTypes.INTEGER },
+			nationality: { type: DataTypes.STRING },
+			address: { type: DataTypes.STRING },
+			phone: { type: DataTypes.STRING(20) },
+			email: { type: DataTypes.STRING },
+			birth: { type: DataTypes.DATEONLY },
 		},
 		{
 			underscored: true,
@@ -39,5 +23,5 @@ module.exports = (sequelize , DataTypes) => {
 			timestamps: false,
 		}
 	);
-   return Author;
-}
+	return Author;
+};

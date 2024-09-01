@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 	const SocialMedia = sequelize.define(
-		"socialMedia",
+		"SocialMedia",
 		{
 			id: { 
             type: DataTypes.INTEGER,
@@ -26,13 +26,7 @@ module.exports = (sequelize, DataTypes) => {
 			timestamps: false,
 			underscored: true,
 		}
-	);
-   SocialMedia.associate = (models)=>{
-      SocialMedia.belongsTo(models.Author , {
-         foreignKey : "authorId",
-      })
-
-   }
+	)
    return SocialMedia
 };
 

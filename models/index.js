@@ -38,8 +38,8 @@ db.socialMedia = require("./socialMediaModel.js")(sequelize , DataTypes)
 
 
 //add Associated 
-db.author.associate(db.socialMedia)
-db.socialMedia.associate(db.author)
+db.author.hasMany(db.socialMedia , {foreignKey:"authorId"})
+db.socialMedia.belongsTo(db.author , {foreignKey:"authorId"})
 
 // The sync() method ensures that the defined models in Sequelize match the structure of the actual database tables. In other words, it synchronizes the model definitions with the schema of the database.
 db.sequelize.sync({force:false}).then(()=>{
