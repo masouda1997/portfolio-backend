@@ -9,7 +9,7 @@ const getAuthors = async (req, res) => {
 
 const getSocialMediaByAuthorsId = async (req,res) => {
    // const authorId = req.params
-	console.log("social model  " , db.socialMedia);
+	// console.log("social model  " , db.socialMedia);
 
 	const {id} = req.params
 	
@@ -36,4 +36,23 @@ const getSocialMediaByAuthorsId = async (req,res) => {
 };
 // SELECT `Author`.`id`, `Author`.`first_name` AS `firstName`, `Author`.`last_name` AS `lastName`, `Author`.`age`, `Author`.`nationality`, `Author`.`address`, `Author`.`phone`, `Author`.`email`, `Author`.`birth`, `SocialMedia`.`id` AS `SocialMedia.id`, `SocialMedia`.`platform` AS `SocialMedia.platform`, `SocialMedia`.`link` AS `SocialMedia.link`, `SocialMedia`.`author_id` AS `SocialMedia.authorId` FROM `author` AS `Author` LEFT OUTER JOIN `social_media` AS `SocialMedia` ON `Author`.`id` = `SocialMedia`.`author_id` WHERE `Author`.`id` = '1';
 
-module.exports = { getAuthors , getSocialMediaByAuthorsId };
+const getLanguageByAuthorId = async(req ,res)=>{
+	const {id} = req.params
+	try{
+		const authorWithLanguage = await db.author.findOne({
+			where:{id},
+			include:[
+				{
+					model:db.languages,
+					attributes: ['id','authorId','language'], 
+					required: false 
+				}
+			]
+		})
+	}catch(error){
+		console.error("Error fetching languages:", error);
+      res.status(500).send({message:"Internal server ERROR"})
+	}
+}
+
+module.exports = { getAuthors , getSocialMediaByAuthorsId  , getLanguageByAuthorId};
