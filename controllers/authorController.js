@@ -1,24 +1,24 @@
-const db = require("../models");
+const model = require("../models");
 
-// const Author = db.author;
+// const Author = model.author;
 
 const getAuthors = async (req, res) => {
-	let author = await db.author.findAll({});
+	let author = await model.author.findAll({});
 	res.status(200).send(author);
 };
 
 const getSocialMediaByAuthorsId = async (req,res) => {
    // const authorId = req.params
-	// console.log("social model  " , db.socialMedia);
+	// console.log("social model  " , model.socialMedia);
 
 	const {id} = req.params
 	
 	try {
-		const authorWithSocialMedia = await db.author.findOne({
+		const authorWithSocialMedia = await model.author.findOne({
 			where: {id},
 			include: [
 				{
-					model: db.socialMedia,
+					model: model.socialMedia,
 					attributes: ['id', 'platform', 'link', 'authorId'], 
 					required: false 
 				},
@@ -39,16 +39,20 @@ const getSocialMediaByAuthorsId = async (req,res) => {
 const getLanguageByAuthorId = async(req ,res)=>{
 	const {id} = req.params
 	try{
-		const authorWithLanguage = await db.author.findOne({
+		const authorWithLanguage = await model.author.findOne({
 			where:{id},
 			include:[
 				{
-					model:db.languages,
+					model:model.languages,
 					attributes: ['id','authorId','language'], 
 					required: false 
 				}
 			]
 		})
+		if(!authorWithLanguage){
+         return res.status(404).send({message:"Author not found!"});
+      }
+      return res.status(200).send(authorWithLanguage)
 	}catch(error){
 		console.error("Error fetching languages:", error);
       res.status(500).send({message:"Internal server ERROR"})
