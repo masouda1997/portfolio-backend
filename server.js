@@ -3,6 +3,7 @@ const cors = require("cors");
 const commentRoute = require("./routes/commentsRouter.js");
 const educationRoute = require("./routes/educationsRouter.js");
 const authorRouter = require("./routes/authorRoutes.js");
+const projectsRouter = require("./routes/projectRoutes.js");
 const getRoutes = require("./utility/getRoutes.js")
 const printTree = require("./utility/printTree.js")
 
@@ -23,6 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/comments", commentRoute);
 app.use("/api/education", educationRoute);
 app.use("/api/author", authorRouter);
+app.use("/api/projects" , projectsRouter )
 // Route to display all routes in a tree format with links
 app.get("/", (req, res) => {
 	// Get all routes including those under /api prefixes
