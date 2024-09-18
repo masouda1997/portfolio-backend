@@ -39,6 +39,7 @@ db.socialMedia = require("./socialMediaModel.js")(sequelize , DataTypes)
 db.languages = require("./languageModel.js")(sequelize , DataTypes)
 db.projects = require("./porjectsModel.js")(sequelize , DataTypes)
 db.skills = require("./skilsModel.js")(sequelize , DataTypes)
+db.ProjectToSkills = require("./projectSkillsmodel.js")(sequelize , DataTypes)
 
 
 //add Associated 
@@ -46,8 +47,8 @@ db.author.hasMany(db.socialMedia , {foreignKey:"authorId"})
 db.author.hasMany(db.languages , {foreignKey:"authorId"})
 db.socialMedia.belongsTo(db.author , {foreignKey:"authorId"})
 db.languages.belongsTo(db.author , {foreignKey:"authorId"})
-db.projects.belongsToMany(db.skills , { through: "ProjectToSkills"})
-db.skills.belongsToMany(db.projects , { through: "ProjectToSkills"})
+db.projects.belongsToMany(db.skills , {through:db.ProjectToSkills , foreignKey:"projectId" , otherKey:"skillId" , timestamps:false})
+db.skills.belongsToMany(db.projects , {through:db.ProjectToSkills , foreignKey:"skillId" , otherKey:"projectId" , timestamps:false})
 
 // The sync() method ensures that the defined models in Sequelize match the structure of the actual database tables. In other words, it synchronizes the model definitions with the schema of the database.
 db.sequelize.sync({force:false}).then(()=>{
