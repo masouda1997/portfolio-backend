@@ -11,12 +11,17 @@ require("dotenv").config();
 
 const app = express();
 
-const coreOptions = {
-	origin: `${process.env.HOST}:${process.env.PORT}`,
+const corsOptions = {
+	origin: `${process.env.HOST}:${process.env.CORS_PORT}`,
+	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+
 };
 
+console.log(process.env.HOST);
+console.log(process.env.CORS_PORT);
+
 //middle wares
-app.use(cors(coreOptions));
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

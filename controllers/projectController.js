@@ -19,7 +19,7 @@ const getProjectSkills = async(req,res) => {
          return res.status(404).send({message:"project or skills not found!"})
       }
 
-      // format the response 
+      // format the response to desired one 
       const formattedList  = projects.map(p => ({
          project : p.name,
          skills : p.Skills.map(s => s.title)
